@@ -1,4 +1,4 @@
-const size = 50;
+const size = 25;
 const tiles = [
   { tile: new Tile("images/tiles/up.png", size), name: "up" },
   { tile: new Tile("images/tiles/down.png", size), name: "down" },

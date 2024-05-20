@@ -2,7 +2,7 @@ const canvas = document.getElementById("waveCanvas");
 const ctx = canvas.getContext("2d");
 canvas.width = 1200;
 canvas.height = 800;
-const cellSize = 50;
+const cellSize = 25;
 const canvasWidth = canvas.width;
 const canvasHeight = canvas.height;
 
@@ -167,6 +167,30 @@ function animate() {
   let option = pickTile(grid);
   if (option === null) {
     return;
+  } else if (!option.collapsed && option.options.length === 0) {
+    grid = [];
+    for (let j = 0; j < veritcalCells; j++) {
+      const gridRow = [];
+      for (let i = 0; i < horizontalCells; i++) {
+        const cell = {
+          x: i,
+          y: j,
+          collapsed: false,
+          options: tiles,
+          tile: "empty",
+        };
+        gridRow.push(cell);
+      }
+      grid.push(gridRow);
+    }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawGrid();
+    option = pickTile(grid);
+    const tile = fillTileAndUpdateGrid(grid, option);
+
+    tile.tile.draw(ctx, tile.x, tile.y);
+
+    requestAnimationFrame(animate);
   } else {
     const tile = fillTileAndUpdateGrid(grid, option);
 
@@ -176,28 +200,3 @@ function animate() {
   }
 }
 animate();
-
-// else if (!option.collapsed && option.options.length === 0) {
-//     grid = [];
-//     for (let j = 0; j < veritcalCells; j++) {
-//       const gridRow = [];
-//       for (let i = 0; i < horizontalCells; i++) {
-//         const cell = {
-//           x: i,
-//           y: j,
-//           collapsed: false,
-//           options: tiles,
-//           tile: "empty",
-//         };
-//         gridRow.push(cell);
-//       }
-//       grid.push(gridRow);
-//     }
-//     ctx.clearRect(0, 0, canvas.width, canvas.height);
-//     drawGrid();
-//     option = pickTile(grid);
-//     const tile = fillTileAndUpdateGrid(grid, option);
-
-//     tile.tile.draw(ctx, tile.x, tile.y);
-
-//     requestAnimationFrame(animate);
