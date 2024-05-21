@@ -1,30 +1,13 @@
 const canvas = document.getElementById("waveCanvas");
 const ctx = canvas.getContext("2d");
-canvas.width = 1200;
-canvas.height = 800;
-const cellSize = 25;
+canvas.width = 400;
+canvas.height = 400;
 const canvasWidth = canvas.width;
 const canvasHeight = canvas.height;
 
-const veritcalCells = Math.floor(canvas.height / cellSize);
-const horizontalCells = Math.floor(canvas.width / cellSize);
+const veritcalCells = Math.floor(canvas.height / size);
+const horizontalCells = Math.floor(canvas.width / size);
 let grid = [];
-
-for (let j = 0; j < veritcalCells; j++) {
-  const gridRow = [];
-  for (let i = 0; i < horizontalCells; i++) {
-    const cell = {
-      x: i,
-      y: j,
-      collapsed: false,
-      options: tiles,
-      tile: "empty",
-    };
-    gridRow.push(cell);
-  }
-  grid.push(gridRow);
-}
-
 function fillTileAndUpdateGrid(grid, tileToFile) {
   const neighbors = neumannNeighborhood(grid, tileToFile);
   const option =
@@ -32,15 +15,15 @@ function fillTileAndUpdateGrid(grid, tileToFile) {
   grid[tileToFile.y][tileToFile.x].options = [];
   grid[tileToFile.y][tileToFile.x].tile = option.name;
   grid[tileToFile.y][tileToFile.x].collapsed = true;
-  const valid = reduceOptions(option);
 
   for (let j = 0; j < neighbors.length; j++) {
     const cell = neighbors[j].cell;
     const direction = neighbors[j].direction;
+    const valid = option.connections[direction];
 
     if (!grid[cell.y][cell.x].collapsed) {
       const validOptions = grid[cell.y][cell.x].options.filter((entry) => {
-        return valid[direction].includes(entry.name);
+        return valid.includes(entry.name);
       });
       grid[cell.y][cell.x].options = validOptions;
     }
@@ -107,60 +90,43 @@ for (let j = 0; j < veritcalCells; j++) {
     ctx.beginPath();
 
     ctx.strokeStyle = "white";
-    ctx.rect(i * cellSize, j * cellSize, cellSize, cellSize);
+    ctx.rect(i * size, j * size, size, size);
     ctx.stroke();
   }
 }
 
 function drawGrid() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   for (let j = 0; j < veritcalCells; j++) {
     for (let i = 0; i < horizontalCells; i++) {
       ctx.beginPath();
 
       ctx.strokeStyle = "white";
-      ctx.rect(i * cellSize, j * cellSize, cellSize, cellSize);
+      ctx.rect(i * size, j * size, size, size);
       ctx.stroke();
     }
   }
 }
-function reduceOptions(tile) {
-  const validOptions = {};
-  switch (tile.name) {
-    case "up":
-      validOptions.top = ["down", "left", "right"];
-      validOptions.bottom = ["down", "blank"];
-      validOptions.left = ["up", "down", "right"];
-      validOptions.right = ["up", "down", "left"];
-      break;
-    case "down":
-      validOptions.top = ["up", "blank"];
-      validOptions.bottom = ["up", "right", "left"];
-      validOptions.left = ["up", "down", "right"];
-      validOptions.right = ["up", "down", "left"];
-      break;
-    case "left":
-      validOptions.top = ["down", "right", "left"];
-      validOptions.bottom = ["up", "right", "left"];
-      validOptions.left = ["up", "down", "right"];
-      validOptions.right = ["right", "blank"];
-      break;
 
-    case "right":
-      validOptions.top = ["down", "right", "left"];
-      validOptions.bottom = ["up", "right", "left"];
-      validOptions.left = ["left", "blank"];
-      validOptions.right = ["up", "down", "left"];
-      break;
-    case "blank":
-      validOptions.top = ["up", "blank"];
-      validOptions.bottom = ["down", "blank"];
-      validOptions.left = ["left", "blank"];
-      validOptions.right = ["right", "blank"];
-      break;
+function recreateGrid(tileType) {
+  grid = [];
+  for (let j = 0; j < veritcalCells; j++) {
+    const gridRow = [];
+    for (let i = 0; i < horizontalCells; i++) {
+      const cell = {
+        x: i,
+        y: j,
+        collapsed: false,
+        options: tileType,
+        tile: "empty",
+      };
+      gridRow.push(cell);
+    }
+    grid.push(gridRow);
   }
-  return validOptions;
 }
 
+function drawEmptyGrid() {}
 // drawing
 
 function animate() {
@@ -168,22 +134,8 @@ function animate() {
   if (option === null) {
     return;
   } else if (!option.collapsed && option.options.length === 0) {
-    grid = [];
-    for (let j = 0; j < veritcalCells; j++) {
-      const gridRow = [];
-      for (let i = 0; i < horizontalCells; i++) {
-        const cell = {
-          x: i,
-          y: j,
-          collapsed: false,
-          options: tiles,
-          tile: "empty",
-        };
-        gridRow.push(cell);
-      }
-      grid.push(gridRow);
-    }
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    console.log(grid);
+    recreateGrid(tiles);
     drawGrid();
     option = pickTile(grid);
     const tile = fillTileAndUpdateGrid(grid, option);
@@ -199,4 +151,7 @@ function animate() {
     requestAnimationFrame(animate);
   }
 }
+recreateGrid(tiles);
 animate();
+
+sockets;
