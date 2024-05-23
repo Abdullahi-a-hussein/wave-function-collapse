@@ -1,7 +1,7 @@
 const canvas = document.getElementById("waveCanvas");
 const ctx = canvas.getContext("2d");
-canvas.width = 400;
-canvas.height = 400;
+canvas.width = 1000;
+canvas.height = 750;
 const canvasWidth = canvas.width;
 const canvasHeight = canvas.height;
 
@@ -134,8 +134,7 @@ function animate() {
   if (option === null) {
     return;
   } else if (!option.collapsed && option.options.length === 0) {
-    console.log(grid);
-    recreateGrid(tiles);
+    recreateGrid(sockets);
     drawGrid();
     option = pickTile(grid);
     const tile = fillTileAndUpdateGrid(grid, option);
@@ -151,7 +150,5 @@ function animate() {
     requestAnimationFrame(animate);
   }
 }
-recreateGrid(tiles);
+recreateGrid(sockets);
 animate();
-
-sockets;

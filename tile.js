@@ -34,3 +34,7 @@ class Tile {
     }
   }
 }
+
+class RotatedTile {
+  constructor(tile, rotation) {}
+}
