@@ -1,14 +1,16 @@
 const canvas = document.getElementById("waveCanvas");
 const ctx = canvas.getContext("2d");
 canvas.width = 1000;
-canvas.height = 750;
+canvas.height = 800;
 const canvasWidth = canvas.width;
 const canvasHeight = canvas.height;
+const tilesUsed = sockets;
 
 const veritcalCells = Math.floor(canvas.height / size);
 const horizontalCells = Math.floor(canvas.width / size);
 let grid = [];
-function fillTileAndUpdateGrid(grid, tileToFile) {
+
+function collapseAndPropagate(grid, tileToFile) {
   const neighbors = neumannNeighborhood(grid, tileToFile);
   const option =
     tileToFile.options[Math.floor(Math.random() * tileToFile.options.length)];
@@ -35,7 +37,7 @@ function fillTileAndUpdateGrid(grid, tileToFile) {
   };
 }
 
-function pickTile(grid) {
+function pickTileWithLowestenthropy(grid) {
   let minOptions = null;
 
   // First, find an initial non-collapsed cell to start with
@@ -85,30 +87,18 @@ function pickTile(grid) {
   return sameSize[Math.floor(Math.random() * sameSize.length)];
 }
 
-for (let j = 0; j < veritcalCells; j++) {
-  for (let i = 0; i < horizontalCells; i++) {
-    ctx.beginPath();
-
-    ctx.strokeStyle = "white";
-    ctx.rect(i * size, j * size, size, size);
-    ctx.stroke();
-  }
-}
-
 function drawGrid() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   for (let j = 0; j < veritcalCells; j++) {
     for (let i = 0; i < horizontalCells; i++) {
       ctx.beginPath();
-
-      ctx.strokeStyle = "white";
       ctx.rect(i * size, j * size, size, size);
-      ctx.stroke();
+      ctx.fill();
     }
   }
 }
 
-function recreateGrid(tileType) {
+function recreateGrid() {
   grid = [];
   for (let j = 0; j < veritcalCells; j++) {
     const gridRow = [];
@@ -117,7 +107,7 @@ function recreateGrid(tileType) {
         x: i,
         y: j,
         collapsed: false,
-        options: tileType,
+        options: tilesUsed,
         tile: "empty",
       };
       gridRow.push(cell);
@@ -130,25 +120,25 @@ function drawEmptyGrid() {}
 // drawing
 
 function animate() {
-  let option = pickTile(grid);
+  let option = pickTileWithLowestenthropy(grid);
   if (option === null) {
     return;
   } else if (!option.collapsed && option.options.length === 0) {
-    recreateGrid(sockets);
-    drawGrid();
-    option = pickTile(grid);
-    const tile = fillTileAndUpdateGrid(grid, option);
+    recreateGrid();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    option = pickTileWithLowestenthropy(grid);
+    const tile = collapseAndPropagate(grid, option);
 
     tile.tile.draw(ctx, tile.x, tile.y);
 
     requestAnimationFrame(animate);
   } else {
-    const tile = fillTileAndUpdateGrid(grid, option);
+    const tile = collapseAndPropagate(grid, option);
 
     tile.tile.draw(ctx, tile.x, tile.y);
 
     requestAnimationFrame(animate);
   }
 }
-recreateGrid(sockets);
+recreateGrid();
 animate();

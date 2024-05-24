@@ -1,5 +1,7 @@
 const size = 25;
-const path = "images/circuit";
+const circuitPath = "images/circuit";
+const tilePath = "images/tiles";
+const waterPath = "images/tiles";
 
 const topGGG = [
   "10",
@@ -153,6 +155,72 @@ const bottomGGB = ["21", "32"];
 const leftGGB = ["2", "31"];
 const rightGGB = ["2", "3"];
 
+const waterAdjacent = {
+  topGGGGG: ["0", "2", "4", "5", "8", "9", "12", "17", "21", "28", "29", "32"],
+  bottomGGGGG: [
+    "0",
+    "2",
+    "6",
+    "7",
+    "10",
+    "11",
+    "12",
+    "23",
+    "24",
+    "30",
+    "31",
+    "34",
+  ],
+  leftGGGGG: [
+    "1",
+    "3",
+    "5",
+    "6",
+    "9",
+    "10",
+    "12",
+    "18",
+    "22",
+    "23",
+    "29",
+    "30",
+    "33",
+  ],
+  rightGGGGG: [
+    "1",
+    "3",
+    "4",
+    "7",
+    "8",
+    "11",
+    "12",
+    "20",
+    "21",
+    "24",
+    "28",
+    "31",
+    "35",
+  ],
+  topWWWWW: ["25", "26", "27", "34", "38", "39"],
+  bottomWWWWW: ["25", "26", "27", "32", "36", "37"],
+  leftWWWWW: ["25", "26", "27", "35", "36", "39"],
+  rightWWWWW: ["25", "26", "27", "33", "37", "38"],
+
+  leftGCGGG: ["2", "4", "11"],
+  rightGCGGG: ["2", "5", "10"],
+
+  topGCCCG: ["1", "3", "6", "7", "10", "11"],
+  bottomGCCCG: ["1", "3", "4", "5", "8", "9"],
+  leftGCCCG: ["0", "7", "8"],
+  rightGCCCG: ["0", "6", "9"],
+
+  leftWCGGG: ["28", "32", "37"],
+  rightWCGGG: ["29", "32"],
+
+  topWCCCG: [],
+  bottomWCCCG: ["29"],
+};
+
 const tiles = [
   {
     tile: new Tile("images/tiles/up.png", size),
@@ -208,7 +276,7 @@ const tiles = [
 
 const sockets = [
   {
-    tile: new Tile(`${path}/0.png`, size),
+    tile: new Tile(`${circuitPath}/0.png`, size),
     name: "0",
     connections: {
       top: topGYG,
@@ -218,7 +286,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/01.png`, size),
+    tile: new Tile(`${circuitPath}/01.png`, size),
     name: "01",
     connections: {
       top: topGWG,
@@ -228,7 +296,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/1.png`, size),
+    tile: new Tile(`${circuitPath}/1.png`, size),
     name: "1",
     connections: {
       top: topBBB,
@@ -238,7 +306,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/2.png`, size),
+    tile: new Tile(`${circuitPath}/2.png`, size),
     name: "2",
     connections: {
       top: topGYG,
@@ -248,7 +316,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/21.png`, size),
+    tile: new Tile(`${circuitPath}/21.png`, size),
     name: "21",
     connections: {
       top: topGGB,
@@ -258,7 +326,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/22.png`, size),
+    tile: new Tile(`${circuitPath}/22.png`, size),
     name: "22",
     connections: {
       top: topBBB,
@@ -268,7 +336,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/23.png`, size),
+    tile: new Tile(`${circuitPath}/23.png`, size),
     name: "23",
     connections: {
       top: topBGG,
@@ -278,7 +346,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/3.png`, size),
+    tile: new Tile(`${circuitPath}/3.png`, size),
     name: "3",
     connections: {
       top: topGGG,
@@ -288,7 +356,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/31.png`, size),
+    tile: new Tile(`${circuitPath}/31.png`, size),
     name: "31",
     connections: {
       top: topGGG,
@@ -298,7 +366,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/32.png`, size),
+    tile: new Tile(`${circuitPath}/32.png`, size),
     name: "32",
     connections: {
       top: topGGB,
@@ -308,7 +376,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/33.png`, size),
+    tile: new Tile(`${circuitPath}/33.png`, size),
     name: "33",
     connections: {
       top: topBGG,
@@ -318,7 +386,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/4.png`, size),
+    tile: new Tile(`${circuitPath}/4.png`, size),
     name: "4",
     connections: {
       top: topGYG,
@@ -328,7 +396,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/5.png`, size),
+    tile: new Tile(`${circuitPath}/5.png`, size),
     name: "5",
     connections: {
       top: topGYG,
@@ -338,7 +406,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/51.png`, size),
+    tile: new Tile(`${circuitPath}/51.png`, size),
     name: "51",
     connections: {
       top: topGYG,
@@ -348,7 +416,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/52.png`, size),
+    tile: new Tile(`${circuitPath}/52.png`, size),
     name: "52",
     connections: {
       top: topGGG,
@@ -358,7 +426,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/53.png`, size),
+    tile: new Tile(`${circuitPath}/53.png`, size),
     name: "53",
     connections: {
       top: topGGG,
@@ -368,7 +436,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/6.png`, size),
+    tile: new Tile(`${circuitPath}/6.png`, size),
     name: "6",
     connections: {
       top: topGGG,
@@ -378,7 +446,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/7.png`, size),
+    tile: new Tile(`${circuitPath}/7.png`, size),
     name: "7",
     connections: {
       top: topGGG,
@@ -388,7 +456,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/71.png`, size),
+    tile: new Tile(`${circuitPath}/71.png`, size),
     name: "71",
     connections: {
       top: topGYG,
@@ -398,7 +466,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/72.png`, size),
+    tile: new Tile(`${circuitPath}/72.png`, size),
     name: "72",
     connections: {
       top: topGYG,
@@ -408,7 +476,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/73.png`, size),
+    tile: new Tile(`${circuitPath}/73.png`, size),
     name: "73",
     connections: {
       top: topGYG,
@@ -418,7 +486,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/8.png`, size),
+    tile: new Tile(`${circuitPath}/8.png`, size),
     name: "8",
     connections: {
       top: topGYG,
@@ -428,7 +496,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/81.png`, size),
+    tile: new Tile(`${circuitPath}/81.png`, size),
     name: "81",
     connections: {
       top: topGGG,
@@ -438,7 +506,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/9.png`, size),
+    tile: new Tile(`${circuitPath}/9.png`, size),
     name: "9",
     connections: {
       top: topGWG,
@@ -448,7 +516,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/91.png`, size),
+    tile: new Tile(`${circuitPath}/91.png`, size),
     name: "91",
     connections: {
       top: topGGG,
@@ -458,7 +526,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/92.png`, size),
+    tile: new Tile(`${circuitPath}/92.png`, size),
     name: "92",
     connections: {
       top: topGYG,
@@ -468,7 +536,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/93.png`, size),
+    tile: new Tile(`${circuitPath}/93.png`, size),
     name: "93",
     connections: {
       top: topGGG,
@@ -478,7 +546,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/10.png`, size),
+    tile: new Tile(`${circuitPath}/10.png`, size),
     name: "10",
     connections: {
       top: topGYG,
@@ -488,7 +556,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/101.png`, size),
+    tile: new Tile(`${circuitPath}/101.png`, size),
     name: "101",
     connections: {
       top: topGYG,
@@ -498,7 +566,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/102.png`, size),
+    tile: new Tile(`${circuitPath}/102.png`, size),
     name: "102",
     connections: {
       top: topGGG,
@@ -508,7 +576,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/103.png`, size),
+    tile: new Tile(`${circuitPath}/103.png`, size),
     name: "103",
     connections: {
       top: topGGG,
@@ -518,7 +586,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/11.png`, size),
+    tile: new Tile(`${circuitPath}/11.png`, size),
     name: "11",
     connections: {
       top: topGGG,
@@ -528,7 +596,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/111.png`, size),
+    tile: new Tile(`${circuitPath}/111.png`, size),
     name: "111",
     connections: {
       top: topGYG,
@@ -538,7 +606,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/12.png`, size),
+    tile: new Tile(`${circuitPath}/12.png`, size),
     name: "12",
     connections: {
       top: topGYG,
@@ -548,7 +616,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/121.png`, size),
+    tile: new Tile(`${circuitPath}/121.png`, size),
     name: "121",
     connections: {
       top: topGGG,
@@ -558,7 +626,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/122.png`, size),
+    tile: new Tile(`${circuitPath}/122.png`, size),
     name: "122",
     connections: {
       top: topGGG,
@@ -568,7 +636,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/123.png`, size),
+    tile: new Tile(`${circuitPath}/123.png`, size),
     name: "123",
     connections: {
       top: topGGG,
@@ -578,7 +646,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/13.png`, size),
+    tile: new Tile(`${circuitPath}/13.png`, size),
     name: "13",
     connections: {
       top: topGGG,
@@ -588,7 +656,7 @@ const sockets = [
     },
   },
   {
-    tile: new Tile(`${path}/131.png`, size),
+    tile: new Tile(`${circuitPath}/131.png`, size),
     name: "131",
     connections: {
       top: topGWG,
@@ -598,3 +666,17 @@ const sockets = [
     },
   },
 ];
+
+const water = [];
+for (let i = 0; i < 40; i++) {
+  water.push({
+    tile: new Tile(`${waterPath}/${i}.png`, size),
+    name: `${i}`,
+    connections: {
+      top: [],
+      bottom: [],
+      left: [],
+      right: [],
+    },
+  });
+}
